@@ -43,6 +43,8 @@ def addRecord():
 @cross_origin(supports_credentials=True)
 def getRecords():        
     empId = request.args.get('emp_id')
+    latitude = request.args.get('latitude')
+    longitude = request.args.get('longitude')
     records = []    
     generalRecords = []
     try:
@@ -60,7 +62,7 @@ def getRecords():
             stat['steps'] = generalRecords[0][i]
             stat['created'] = generalRecords[1][i]                                                                                                        
             result.append(stat)                 
-        pData = requests.get('https://api.npoint.io/c2964d73bfb19f317f87/')               
+        pData = requests.get('https://api.ambeedata.com/latest/by-lat-lng?lat='+latitude+'&lng='+longitude+'&apikey='+'${API_KEY}')               
         return jsonify({ "data": result, "p_data": pData.json() })
     except:
         return "something went wrong"
